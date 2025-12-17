@@ -1,0 +1,168 @@
+
+R^2 Score for the best PySR equation from my_equations/11_4_25: -345814.7647
+Accuracy Score: 0.928
+Time Elapsed: 72.72 seconds
+Equation Used: complexity                                                      20
+loss                                                      0.101448
+equation         x5 + (((((x1 * 2.952316) / tan(log(sqrt(x4))))...
+score                                                     0.000001
+sympy_format     2.205640593887*x1/tan(log(sqrt(x4))) + x5 + 0....
+lambda_format    PySRFunction(X=>2.205640593887*x1/tan(log(sqrt...
+Name: 14, dtype: object
+------------------------------------------------------------------------------------------
+
+R^2 Score for the best PySR equation from my_equations/11_4_25.2: -2387856195.7548
+Accuracy Score: 0.932
+Time Elapsed: 273.76 seconds
+Equation Used: complexity                                                      20
+loss                                                      0.070286
+equation         ((((((33.225384 / x1) + x3) + x2) * x5) - (x4 ...
+score                                                      0.00012
+sympy_format     x5*(-0.841451021702452*x4 + x5*(x2 + x3 + 33.2...
+lambda_format    PySRFunction(X=>x5*(-0.841451021702452*x4 + x5...
+Name: 15, dtype: object
+------------------------------------------------------------------------------------------
+
+R^2 Score for the best PySR equation from my_equations/11_4_25_Q_length: -122372945036392576.0000
+Accuracy Score: 0.896
+Time Elapsed: 231.67 seconds
+Equation Used: complexity                                                      18
+loss                                                      0.143429
+equation         (square((x0 - x1) + 3.285215) * ((x1 * (1.4787...
+score                                                          0.0
+sympy_format     -sqrt(x0) + (x1*(1.4787751 - sqrt(x0)) + 992.6...
+lambda_format    PySRFunction(X=>-sqrt(x0) + (x1*(1.4787751 - s...
+Name: 9, dtype: object
+------------------------------------------------------------------------------------------
+
+R^2 Score for the best PySR equation from my_equations/11_4_25.3: -3096112657.2794
+Accuracy Score: 0.9413333333333334
+Time Elapsed: 256.23 seconds
+Equation Used: complexity                                                      18
+loss                                                      0.078286
+equation         (x5 * (sqrt(x5) + (((x5 * 38.019947) / x1) - x...
+score                                                     0.030642
+sympy_format     x5*(-x4 + sqrt(x5) + 38.019947*x5/x1) - 1/(x2 ...
+lambda_format    PySRFunction(X=>x5*(-x4 + sqrt(x5) + 38.019947...
+Name: 10, dtype: object
+------------------------------------------------------------------------------------------
+
+Accuracy Score for the best PySR equation from my_equations/11_9_25: 0.888
+Variables Used: ['X0: Q', 'X1: length']
+Time Elapsed: 37.78 seconds
+Equation Used: complexity                                                      17
+loss                                                      0.150286
+equation         ((x1 - (((0.0040021343 * (-0.54093295 + (x1 + ...
+score                                                     0.016824
+sympy_format     x0*(-x0*(0.0080042686*x1 - 0.262167406313195) ...
+lambda_format    PySRFunction(X=>x0*(-x0*(0.0080042686*x1 - 0.2...
+Name: 10, dtype: object
+------------------------------------------------------------------------------------------
+
+Accuracy Score for the best PySR equation from my_equations/11_9_25: 0.932
+Variables Used: ['X0: Tin', 'X1: Q', 'X2: flow_shale', 'X3: flow_steam', 'X4: length', 'X5: Pressue']
+Time Elapsed: 233.55 seconds
+Equation Used: complexity                                                      20
+loss                                                         0.092
+equation         ((x4 + (x4 * (1.1844769 - ((0.5019301 - (x3 + ...
+score                                                     0.010588
+sympy_format     x1*(x4*(-sqrt(x1)*(-x2 - x3 + 0.5019301) + 1.1...
+lambda_format    PySRFunction(X=>x1*(x4*(-sqrt(x1)*(-x2 - x3 + ...
+Name: 16, dtype: object
+------------------------------------------------------------------------------------------
+
+Accuracy Score for the best PySR equation from my_equations/11_9_25.2: 0.6933333333333334
+Variables Used: ['X0: Tin', 'X1: Q']
+Time Elapsed: 227.21 seconds
+Equation Used: complexity                                                      13
+loss                                                      0.506286
+equation         (square(square(396.51166 - x1)) - x1) * (461.1...
+score                                                     0.012339
+sympy_format          (461.19727 - x1)*(-x1 + (396.51166 - x1)**4)
+lambda_format    PySRFunction(X=>(461.19727 - x1)*(-x1 + (396.5...
+Name: 7, dtype: object
+------------------------------------------------------------------------------------------
+
+Accuracy Score for the best PySR equation from my_equations/11_9_25.2: 0.688
+Variables Used: ['X0: Tin', 'X1: Q', 'X2: flow_shale']
+Time Elapsed: 228.29 seconds
+Equation Used: complexity                                                      16
+loss                                                      0.508571
+equation         ((square(x0 - square(x2 * x1)) - x0) - x0) * (...
+score                                                     0.001076
+sympy_format      (461.31464 - x1)*(-2*x0 + (x0 - x1**2*x2**2)**2)
+lambda_format    PySRFunction(X=>(461.31464 - x1)*(-2*x0 + (x0 ...
+Name: 9, dtype: object
+------------------------------------------------------------------------------------------
+
+Accuracy Score for the best PySR equation from my_equations/11_9_25.2: 0.6853333333333333
+Variables Used: ['X0: Tin', 'X1: Q', 'X2: flow_shale', 'X3: flow_steam']
+Time Elapsed: 247.70 seconds
+Equation Used: complexity                                                      19
+loss                                                      0.504339
+equation         (461.20468 - x1) / (inv((x1 * 1.5102167) - x0)...
+score                                                     0.005092
+sympy_format     (461.20468 - x1)/(-x2 + 1/(-x0 + 1.5102167*x1)...
+lambda_format    PySRFunction(X=>(461.20468 - x1)/(-x2 + 1/(-x0...
+Name: 11, dtype: object
+------------------------------------------------------------------------------------------
+
+Accuracy Score for the best PySR equation from my_equations/11_9_25.2: 0.8893333333333333
+Variables Used: ['X0: Tin', 'X1: Q', 'X2: flow_shale', 'X3: flow_steam', 'X4: length']
+Time Elapsed: 251.20 seconds
+Equation Used: complexity                                                      19
+loss                                                      0.132571
+equation         x0 + ((sqrt(x1) * ((x2 * (1041.0256 - (sqrt(x1...
+score                                                     0.004302
+sympy_format     x0 + 0.92797244*sqrt(x1)*x2*(-sqrt(x1)*x4 + 10...
+lambda_format    PySRFunction(X=>x0 + 0.92797244*sqrt(x1)*x2*(-...
+Name: 14, dtype: object
+------------------------------------------------------------------------------------------
+
+Accuracy Score for the best PySR equation from my_equations/11_9_25.2: 0.924
+Variables Used: ['X0: Tin', 'X1: Q', 'X2: flow_shale', 'X3: flow_steam', 'X4: length', 'X5: Pressue']
+Time Elapsed: 197.73 seconds
+Equation Used: complexity                                                      19
+loss                                                      0.106857
+equation         (((x5 * (92.86825 / x4)) - (x1 + 213.03693)) /...
+score                                                     0.010527
+sympy_format     1/(0.010767943 - x2) + (-x1 - 213.03693 + 92.8...
+lambda_format    PySRFunction(X=>1/(0.010767943 - x2) + (-x1 - ...
+Name: 12, dtype: object
+------------------------------------------------------------------------------------------
+
+Accuracy Score for the best PySR equation from my_equations/11_9_25.2: 0.688
+Variables Used: ['X0: Q', 'X1: flow_shale']
+Time Elapsed: 208.11 seconds
+Equation Used: complexity                                                      20
+loss                                                      0.506857
+equation         (((x0 / (0.122298226 + (sqrt(x0) - inv(x1)))) ...
+score                                                     0.001127
+sympy_format     464.98557 + (-x0 + x0/(sqrt(x0) + 0.122298226 ...
+lambda_format    PySRFunction(X=>464.98557 + (-x0 + x0/(sqrt(x0...
+Name: 13, dtype: object
+------------------------------------------------------------------------------------------
+
+Accuracy Score for the best PySR equation from my_equations/11_9_25.2: 0.9266666666666666
+Variables Used: ['X0: Tin', 'X1: Q', 'X2: flow_shale', 'X3: flow_steam', 'X4: length', 'X5: Pressue']
+Time Elapsed: 268.27 seconds
+Equation Used: complexity                                                      20
+loss                                                      0.106286
+equation         ((sqrt(x5) + ((-5.9367003 + (39.20748 * (x5 / ...
+score                                                     0.008841
+sympy_format     x0 + (-x4 + sqrt(x5) - 5.9367003 + 39.20748*x5...
+lambda_format    PySRFunction(X=>x0 + (-x4 + sqrt(x5) - 5.93670...
+Name: 13, dtype: object
+------------------------------------------------------------------------------------------
+
+Accuracy Score for the best PySR equation from my_equations/11_9_25.2: 0.928
+Variables Used: ['X0: Tin', 'X1: Q', 'X2: flow_shale', 'X3: flow_steam', 'X4: length', 'X5: Pressue']
+Time Elapsed: 3960.83 seconds
+Equation Used: complexity                                                      49
+loss                                                         0.048
+equation         ((((((-0.5639742 - (sqrt(x4) / 4.8942137)) / e...
+score                                                     0.008771
+sympy_format     x3**2*(x0 - x1)**2*(x2 + x3)**2*(x1*(sqrt(x2) ...
+lambda_format    PySRFunction(X=>x3**2*(x0 - x1)**2*(x2 + x3)**...
+Name: 30, dtype: object
+------------------------------------------------------------------------------------------

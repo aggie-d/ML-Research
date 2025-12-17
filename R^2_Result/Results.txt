@@ -1,0 +1,7 @@
+R^2 Score for the best PySR equation from my_equations/10_13_25/: 0.5828
+R^2 Score for the best PySR equation from my_equations/10_26_25: 0.5668
+R^2 Score for the best PySR equation from my_equations/10_26_25: 0.5668
+R^2 Score for the best PySR equation from my_equations/10_26_25: 0.5828
+R^2 Score for the best PySR equation from my_equations/10_26_25: 0.5828
+
+-------------------------------------------------------------------------------

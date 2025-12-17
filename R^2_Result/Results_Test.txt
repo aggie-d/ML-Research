@@ -1,0 +1,21 @@
+R^2 Score for the best PySR equation from my_equations/10_27_25: 0.5827
+Time Elapsed: 78.40 seconds
+--------------------------------------------------
+R^2 Score for the best PySR equation from my_equations/10_27_25: 0.5633
+Time Elapsed: 77.63 seconds
+Equation Used: PySRFunction(X=>-1.7010583e-5*x0*x1 + 0.9866766)
+--------------------------------------------------
+R^2 Score for the best PySR equation from my_equations/10_27_25: 0.6369
+Time Elapsed: 78.77 seconds
+Equation Used: hi
+--------------------------------------------------
+R^2 Score for the best PySR equation from my_equations/10_27_25: 0.5829
+Time Elapsed: 71.68 seconds
+Equation Used: complexity                                               6
+loss                                              0.102243
+equation                    exp(x1 * (x0 * -3.3406053e-5))
+score                                             0.445771
+sympy_format                      exp(-3.3406053e-5*x0*x1)
+lambda_format    PySRFunction(X=>exp(-3.3406053e-5*x0*x1))
+Name: 3, dtype: object
+------------------------------------------------------------------------------------------
