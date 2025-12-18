@@ -8,8 +8,8 @@ from sklearn.metrics import r2_score
 import os, time
 from sklearn.metrics import accuracy_score
 
-path = "my_equations/11_9_25.2"
-run_id = "11_9_25.2"
+path = "my_equations/12_17_25.2"
+run_id = "12_17_25.2"
 
 def Training_Set(var):
     df = pd.read_excel('AllSAMPLES.xlsx')
@@ -183,6 +183,10 @@ def start(variables):
     time_elapsed = time_end - time_start
     print_results(accuracy, best_lambda_func, time_elapsed, variables)
 
+def printlatexequation(folder_path):
+    model = PySRRegressor.from_file(run_directory=folder_path)
+    print(model.latex())
+
 
 def main():
     # Variables to choose from: "Tin", "Q", "flow_shale", "flow_steam", "length", "Pressue"
@@ -197,7 +201,9 @@ def main():
     # var_1 = ["Tin", "Q", "flow_shale","flow_steam","length"]
     # var_2 = ["Tin", "Q", "flow_shale","flow_steam","length", "Pressue"]
     # var_3 = ["Q", "flow_shale",]
-    start(all_variables)
+    # start(all_variables)
+
+    printlatexequation("my_equations/12_17_25")
     
 
 
