@@ -190,3 +190,39 @@ sympy_format     (-x1 + 498.77774*x5/x4**(3/2))*(x1*x2 + x4/x2*...
 lambda_format    PySRFunction(X=>(-x1 + 498.77774*x5/x4**(3/2))...
 Name: 27, dtype: object
 ------------------------------------------------------------------------------------------
+
+Accuracy Score for the best PySR equation from my_equations/12_17_25.3: 0.9266666666666666
+Variables Used: ['X0: Tin', 'X1: Q', 'X2: flow_shale', 'X3: flow_steam', 'X4: length', 'X5: Pressue']
+Time Elapsed: 11241.09 seconds
+Equation Used: complexity                                                      46
+loss                                                      0.053714
+equation         (square(x4 - square((-2.0277193 * x2) * x5)) *...
+score                                                     0.003527
+sympy_format     x0 - (x4 - 1/x3)**2*(x1*x2 + 1.3847709) + (-x1...
+lambda_format    PySRFunction(X=>x0 - (x4 - 1/x3)**2*(x1*x2 + 1...
+Name: 29, dtype: object
+------------------------------------------------------------------------------------------
+
+Accuracy Score for the best PySR equation from my_equations/12_17_25.3: 0.9346666666666666
+Variables Used: ['X0: Tin', 'X1: Q', 'X2: flow_shale', 'X3: flow_steam', 'X4: length', 'X5: Pressue']
+Time Elapsed: 11143.69 seconds
+Equation Used: complexity                                                      33
+loss                                                      0.050286
+equation         (square((x0 - x1) - x4) * (((x1 + ((((x1 * x4)...
+score                                                     0.005204
+sympy_format     -x0 + (-x1 + (-0.034335846318802*x1*x4 + x1 + ...
+lambda_format    PySRFunction(X=>-x0 + (-x1 + (-0.0343358463188...
+Name: 22, dtype: object
+------------------------------------------------------------------------------------------
+
+Accuracy Score for the best PySR equation from my_equations/12_25_25.3: 0.9386666666666666
+Variables Used: ['X0: Tin', 'X1: Q', 'X2: flow_shale', 'X3: flow_steam', 'X4: length', 'X5: Pressue']
+Time Elapsed: 11019.83 seconds
+Equation Used: complexity                                                      46
+loss                                                      0.046286
+equation         ((((x1 * (sqrt((x3 + x2) / 0.31354952) - (x4 *...
+score                                                      0.01227
+sympy_format     -x5 + (x0*x1*(-0.024101194*x4 + sqrt(3.1892888...
+lambda_format    PySRFunction(X=>-x5 + (x0*x1*(-0.024101194*x4 ...
+Name: 34, dtype: object
+------------------------------------------------------------------------------------------

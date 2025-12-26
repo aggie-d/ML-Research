@@ -8,8 +8,8 @@ from sklearn.metrics import r2_score
 import os, time
 from sklearn.metrics import accuracy_score
 
-path = "my_equations/12_17_25.2"
-run_id = "12_17_25.2"
+path = "my_equations/12_25_25.3"
+run_id = "12_25_25.3"
 
 def Training_Set(var):
     df = pd.read_excel('AllSAMPLES.xlsx')
@@ -38,7 +38,7 @@ def Training_Set(var):
     model = PySRRegressor(
         maxsize=50,
         populations=50,
-        niterations=3000,  # < Increase me for better results
+        niterations=10000,  # < Increase me for better results
         binary_operators=["+", "*", "-", "/"],
         unary_operators=[
             "exp",       
@@ -201,9 +201,9 @@ def main():
     # var_1 = ["Tin", "Q", "flow_shale","flow_steam","length"]
     # var_2 = ["Tin", "Q", "flow_shale","flow_steam","length", "Pressue"]
     # var_3 = ["Q", "flow_shale",]
-    # start(all_variables)
+    start(all_variables)
 
-    printlatexequation("my_equations/12_17_25")
+    # printlatexequation("my_equations/12_17_25")
     
 
 
