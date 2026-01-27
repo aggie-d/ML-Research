@@ -7,38 +7,41 @@ from math import sin, exp
 from sklearn.metrics import r2_score
 import os, time
 from sklearn.metrics import accuracy_score
+from sklearn.model_selection import train_test_split
+import random
 
-path = "my_equations/12_25_25.3"
-run_id = "12_25_25.3"
+path = "my_equations/1_27_25"
+run_id = "1_27_25"
 
-def Training_Set(var):
+def load_and_split_data():
+    
     df = pd.read_excel('AllSAMPLES.xlsx')
+    
+    random_int = random.randint(0, 2**9)
+    # Rename columns here so it is consistent for all sets
+    df.columns = ["Tin", "Q", "flow_shale", "flow_steam", "length", "Pressue", "Status", "Feasability"]
 
-    #Number of rows to read for the training set (70% of the total data) 
-    Training_Set = 3500
+    # 1. Split into Train (70%) and Temp (30%)
+    df_train, df_temp = train_test_split(df, test_size=0.30, random_state=random_int, shuffle=True)
 
-    # df.head(Num_rows)
+    # 2. Split Temp (30%) into Validation (15%) and Test (15%)
+    # We use 0.5 because 50% of 30% = 15% of total
+    df_val, df_test = train_test_split(df_temp, test_size=0.50, random_state=42, shuffle=True)
 
-    df = df.iloc[:Training_Set]
-    df.columns = ["Tin", "Q", "flow_shale", "flow_steam", "length", "Pressue", "Status","Feasability",]
+    return df_train, df_val, df_test, random_int
 
+def Training_Set(df, var):
 
-    # 2. Separate X (Features) and y (Target)
+    # 1. Separate X (Features) and y (Target)
     # X contains all columns *except* 'Numeral' and 'Status'
-
     X = df[var].to_numpy() 
-
-    # X = df[["Q", "length"]].to_numpy()
-
     # y contains only the 'Numeral' column
     Y = df["Feasability"].to_numpy()
 
-    
-    # model = PySRRegressor.from_file(run_directory="my_equations/10_6_25/checkpoint.pkl")
     model = PySRRegressor(
         maxsize=50,
         populations=50,
-        niterations=10000,  # < Increase me for better results
+        niterations=300,  # < Increase me for better results
         binary_operators=["+", "*", "-", "/"],
         unary_operators=[
             "exp",       
@@ -60,8 +63,8 @@ def Training_Set(var):
             "sqrt": {"square": 4, "sqrt": 2},
             "exp": {"exp": 0, "inv": 0},
         },
-        maxdepth=10,
-        complexity_of_constants=2,
+        maxdepth=30,
+        complexity_of_constants=4,
         early_stop_condition=(
         "stop_if(loss, complexity) = loss < 0.03 && complexity < 10"
         # Stop early if we find a good and simple equation
@@ -73,74 +76,45 @@ def Training_Set(var):
             # "cos": {"sin": 0, "cos": 0, "tan": 0},
             # "tan": {"sin": 0, "cos": 0, "tan": 0},
     model.fit(X, Y)
-
-    # print(model)
-
-    # print(model.latex())
     
 
 
-
-def Validation_Set(var):
-    
-    df = pd.read_excel('AllSAMPLES.xlsx')
-
-    #Number of rows to read for the training set (70% of the total data) 
-    Training_Set = 3500
-    #Number of rows to read for the Validation set (15% of the total data) 
-    Validation_Set = 750
-
-    # df.head(Num_rows)
-
-    df = df.iloc[Training_Set:(Validation_Set + Training_Set)]
-    df.columns = ["Tin", "Q", "flow_shale", "flow_steam", "length", "Pressue", "Status","Feasability",]
-
-
-    # 2. Separate X (Features) and y (Target)
-    
-    X = df[var].to_numpy() 
-    # X = df[["Q", "length"]].to_numpy()
-
-    # y contains only the 'Feasability' column
-    Y = df["Feasability"].to_numpy() 
-
+def Validation_Set(df, var):
+    # 1. Separate X (Features) and y (Target)
+    X_val = df[var].to_numpy() 
+    y_val = df["Feasability"].to_numpy() 
 
     model = PySRRegressor.from_file(run_directory=path)
     model.set_params(extra_sympy_mappings="inv(x) = 1/x",)
+    raw_scores_z = model.predict(X_val)
+    
+    # 2. Apply the same threshold as your Test Set
+    predicted_classes = np.sign(raw_scores_z)
+    predicted_classes[predicted_classes == 0] = -1 
+    
+    # 3. Calculate Accuracy
+    acc = accuracy_score(y_val, predicted_classes)
+
+    return acc
    
 
 
-def Test_Set(var):
-    
-    df = pd.read_excel('AllSAMPLES.xlsx')
-
-    #Number of rows to read for the training set (70% of the total data) 
-    Training_Set = 3500
-    #Number of rows to read for the Validation set (15% of the total data) 
-    Validation_Set = 750
-
-    # df.head(Num_rows)
-
-    df = df.iloc[(Validation_Set + Training_Set):]
-    df.columns = ["Tin", "Q", "flow_shale", "flow_steam", "length", "Pressue", "Status","Feasability",]
+def Test_Set(df, var):
 
     X_test = df[var].to_numpy() 
     y_test = df["Feasability"].to_numpy()
 
-    
     model = PySRRegressor.from_file(run_directory=path)
     model.set_params(extra_sympy_mappings="inv(x) = 1/x",)
     lambda_func = model.get_best()
 
-    y_pred = model.predict(X_test)
-    # print(y_pred)
-    
+   
     # 1. Get the raw prediction scores (z values)
     # y_pred is the raw output (z) of the symbolic equation: f(X)
     raw_scores_z = model.predict(X_test)
     
     
-    # 3. Apply a threshold (typically 0.5) to get binary predicted classes (0 or 1)
+    # 2. Apply a threshold (typically 0.5) to get binary predicted classes (0 or 1)
     # Use .astype(int) to convert True/False to 1/0
     
     predicted_classes = np.sign(raw_scores_z)
@@ -150,11 +124,10 @@ def Test_Set(var):
     accuracy = accuracy_score(y_test, predicted_classes)
 
     print(f"Accuracy Score: {accuracy:.4f}\n")
-
     return accuracy, lambda_func
 
     
-def print_results(accuracy, best_lambda_func, time_elapsed, var):
+def print_results(accuracy, best_lambda_func, time_elapsed, var, rand_state, v_score):
 
     folder_name = "Result_Sigmoid_Function"
 
@@ -166,7 +139,7 @@ def print_results(accuracy, best_lambda_func, time_elapsed, var):
         os.makedirs(folder_name)  # Creates the folder if it doesn't exist
 
     # Step 2: Create a text file inside the folder
-    result = f"\nAccuracy Score for the best PySR equation from {path}: {accuracy}\nVariables Used: {var_list}\nTime Elapsed: {time_elapsed:.2f} seconds\nEquation Used: {best_lambda_func}\n"
+    result = f"\nAccuracy Score for the best PySR equation from {path}: {accuracy}\nValidation Score:{v_score}\nVariables Used: {var_list}\nRandom State Used: {rand_state}\nTime Elapsed: {time_elapsed:.2f} seconds\nEquation Used: {best_lambda_func}\n"
     dashes = "-" * 90
     
     txt = result + dashes
@@ -176,12 +149,16 @@ def print_results(accuracy, best_lambda_func, time_elapsed, var):
 
 def start(variables):
     time_start = time.time()
-    Training_Set(variables)
-    Validation_Set(variables)
-    accuracy, best_lambda_func = Test_Set(variables)
+
+    df_train, df_val, df_test, random_state_used = load_and_split_data()
+
+    Training_Set(df_train, variables)
+    validation_score= Validation_Set(df_val, variables)
+    accuracy, best_lambda_func = Test_Set(df_test, variables)
+
     time_end = time.time()
     time_elapsed = time_end - time_start
-    print_results(accuracy, best_lambda_func, time_elapsed, variables)
+    print_results(accuracy, best_lambda_func, time_elapsed, variables, random_state_used, validation_score)
 
 def printlatexequation(folder_path):
     model = PySRRegressor.from_file(run_directory=folder_path)
@@ -189,21 +166,8 @@ def printlatexequation(folder_path):
 
 
 def main():
-    # Variables to choose from: "Tin", "Q", "flow_shale", "flow_steam", "length", "Pressue"
     all_variables = ["Tin", "Q", "flow_shale","flow_steam","length", "Pressue"]
-    # time_start = time.time()
-    # Training_Set(variables)
-    # Validation_Set(variables)
-    # accuracy, best_lambda_func = Test_Set(variables)
-    # time_end = time.time()
-    # time_elapsed = time_end - time_start
-    # print_results(accuracy, best_lambda_func, time_elapsed, variables)
-    # var_1 = ["Tin", "Q", "flow_shale","flow_steam","length"]
-    # var_2 = ["Tin", "Q", "flow_shale","flow_steam","length", "Pressue"]
-    # var_3 = ["Q", "flow_shale",]
     start(all_variables)
-
-    # printlatexequation("my_equations/12_17_25")
     
 
 
