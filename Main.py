@@ -9,9 +9,10 @@ import os, time
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 import random
+from sklearn.metrics import confusion_matrix
 
-path = "my_equations/1_27_25"
-run_id = "1_27_25"
+path = "my_equations/1_27_25.2"
+run_id = "1_27_25.2"
 
 def load_and_split_data():
     
@@ -22,7 +23,7 @@ def load_and_split_data():
     df.columns = ["Tin", "Q", "flow_shale", "flow_steam", "length", "Pressue", "Status", "Feasability"]
 
     # 1. Split into Train (70%) and Temp (30%)
-    df_train, df_temp = train_test_split(df, test_size=0.30, random_state=random_int, shuffle=True)
+    df_train, df_temp = train_test_split(df, test_size=0.30, random_state=343, shuffle=True)
 
     # 2. Split Temp (30%) into Validation (15%) and Test (15%)
     # We use 0.5 because 50% of 30% = 15% of total
@@ -41,7 +42,7 @@ def Training_Set(df, var):
     model = PySRRegressor(
         maxsize=50,
         populations=50,
-        niterations=300,  # < Increase me for better results
+        niterations=1000,  # < Increase me for better results
         binary_operators=["+", "*", "-", "/"],
         unary_operators=[
             "exp",       
@@ -122,6 +123,17 @@ def Test_Set(df, var):
     
     # 4. Calculate the Accuracy
     accuracy = accuracy_score(y_test, predicted_classes)
+    tn, fp, fn, tp = confusion_matrix(y_test, predicted_classes).ravel()
+
+    print(f"Accuracy Score: {accuracy:.4f}")
+    print("-" * 30)
+    print(f"Type 1 Errors (False Positives): {fp}")
+    print(f"   (Model said Feasible, Reality was NOT)")
+    print(f"Type 2 Errors (False Negatives): {fn}")
+    print(f"   (Model said NOT Feasible, Reality was Feasible)")
+    print("-" * 30)
+    print(f"Correctly Identified Feasible:     {tp}")
+    print(f"Correctly Identified Not Feasible: {tn}\n")
 
     print(f"Accuracy Score: {accuracy:.4f}\n")
     return accuracy, lambda_func
@@ -165,9 +177,11 @@ def printlatexequation(folder_path):
     print(model.latex())
 
 
+
 def main():
-    all_variables = ["Tin", "Q", "flow_shale","flow_steam","length", "Pressue"]
-    start(all_variables)
+    # all_variables = ["Tin", "Q", "flow_shale","flow_steam","length", "Pressue"]
+    # start(all_variables)
+    printlatexequation("my_equations/12_27_25.2")
     
 
 
