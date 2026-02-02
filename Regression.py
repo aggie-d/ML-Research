@@ -14,10 +14,10 @@ def load_and_split_data():
     
     random_int = random.randint(0, 2**9)
     # Rename columns here so it is consistent for all sets
-    df.columns = ["Tin", "Q", "flow_shale", "flow_steam", "length", "Pressue", "Status", "Feasability"]
+    df.columns = ["Tin", "Q", "flow_shale", "flow_steam", "length", "Pressure", "Status", "Feasability"]
 
     # 1. Split into Train (55%) and Temp (45%)
-    df_train, df_temp = train_test_split(df, test_size=0.45, random_state=30, shuffle=True)
+    df_train, df_temp = train_test_split(df, test_size=0.45, random_state=random_int, shuffle=True)
 
     # 2. Split Temp (45%) into Validation (15%) and Test (30%)
     # We use 0.67 because 67% of 45% = 30% of total
@@ -185,18 +185,35 @@ def printlatexequation(folder_path):
 
 
 def main():
-    path = "my_equations/2_1_25.1."
-    run_id = "2_1_25.3."
+    path = "my_equations/2_2_25.0."
+    run_id = "2_2_25.0."
+    num_repeat = 5
+    sleep_time = num_repeat * 1300
+
     # all_variables = ["Tin", "Q", "flow_shale","flow_steam","length", "Pressure"]
-    no_tin = ["Q", "flow_shale","flow_steam","length", "Pressure"]
     no_Q = ["Tin", "flow_shale","flow_steam","length", "Pressure"]
     no_shale = ["Tin", "Q", "flow_steam","length", "Pressure"]
     no_steam = ["Tin", "Q", "flow_shale","length", "Pressure"]
     no_length = ["Tin", "Q", "flow_shale","flow_steam","Pressure"]
     no_p = ["Tin", "Q", "flow_shale","flow_steam","length"]
     
-    num_repeat = 5
-    start(no_tin, run_id, path, num_repeat)
+    start(no_Q, run_id, path, num_repeat)
+
+    path = "my_equations/2_2_25.1."
+    run_id = "2_2_25.1."
+    start(no_shale, run_id, path, num_repeat)
+
+    path = "my_equations/2_2_25.2."
+    run_id = "2_2_25.2."
+    start(no_steam, run_id, path, num_repeat)
+
+    path = "my_equations/2_2_25.3."
+    run_id = "2_2_25.3."
+    start(no_length, run_id, path, num_repeat)
+
+    path = "my_equations/2_2_25.4."
+    run_id = "2_2_25.4."
+    start(no_p, run_id, path, num_repeat)
     # printlatexequation("my_equations/2_1_25.0")
 
 
