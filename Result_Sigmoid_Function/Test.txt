@@ -1,0 +1,70 @@
+
+Accuracy Score for the best PySR equation from my_equations/2_1_25.0: 0.9562334217506632
+Validation Score:0.9514824797843666
+Variables Used: ['X0: Tin', 'X1: Q', 'X2: flow_shale', 'X3: flow_steam', 'X4: length', 'X5: Pressue']
+Random State Used: 235
+Time Elapsed: 2012.77 seconds
+Equation Used: complexity                                                      38
+loss                                                      0.085818
+equation         (x1 * sqrt(sqrt(x1))) + (square(square(sqrt(x3...
+score                                                     0.008404
+sympy_format     -x0*sqrt(x1) + x1**(5/4) + 36799822100.3682*x3...
+lambda_format    PySRFunction(X=>-x0*sqrt(x1) + x1**(5/4) + 367...
+Name: 27, dtype: object
+------------------------------------------------------------------------------------------
+
+Accuracy Score for the best PySR equation from my_equations/2_1_25.01: 0.9575596816976127
+Validation Score:0.9595687331536388
+Variables Used: ['X0: Tin', 'X1: Q', 'X2: flow_shale', 'X3: flow_steam', 'X4: length', 'X5: Pressue']
+Random State Used: 316
+Time Elapsed: 761.81 seconds
+Equation Used: complexity                                                      50
+loss                                                      0.076295
+equation         (square(square(x1 - ((x0 - (x5 + x4)) / 1.3280...
+score                                                      0.00008
+sympy_format     x2*(-x4 + (-0.752958297856448*x0 + x1 + 0.7529...
+lambda_format    PySRFunction(X=>x2*(-x4 + (-0.752958297856448*...
+Name: 25, dtype: object
+------------------------------------------------------------------------------------------
+
+Accuracy Score for the best PySR equation from my_equations/2_1_25.012: 0.9595490716180372
+Validation Score:0.9609164420485176
+Variables Used: ['X0: Tin', 'X1: Q', 'X2: flow_shale', 'X3: flow_steam', 'X4: length', 'X5: Pressue']
+Random State Used: 402
+Time Elapsed: 7081.51 seconds
+Equation Used: complexity                                                      47
+loss                                                      0.064727
+equation         (((2.7309465 / square(inv(x1))) * ((x2 - 0.441...
+score                                                     0.010727
+sympy_format     -x0**2*x2/x5 + 2.7309465*x1**2*(x2 + (x2 + x3)...
+lambda_format    PySRFunction(X=>-x0**2*x2/x5 + 2.7309465*x1**2...
+Name: 22, dtype: object
+------------------------------------------------------------------------------------------
+
+Accuracy Score for the best PySR equation from my_equations/2_1_25.0123: 0.9568965517241379
+Validation Score:0.9555256064690026
+Variables Used: ['X0: Tin', 'X1: Q', 'X2: flow_shale', 'X3: flow_steam', 'X4: length', 'X5: Pressue']
+Random State Used: 334
+Time Elapsed: 800.75 seconds
+Equation Used: complexity                                                      46
+loss                                                          0.08
+equation         ((((((((((44.021378 / x1) * x5) + (8.121569 - ...
+score                                                     0.002262
+sympy_format     -x0 + x4*(-x1 + x4*(-23.9538918059587*x4 + 36....
+lambda_format    PySRFunction(X=>-x0 + x4*(-x1 + x4*(-23.953891...
+Name: 24, dtype: object
+------------------------------------------------------------------------------------------
+
+Accuracy Score for the best PySR equation from my_equations/2_1_25.01234: 0.9509283819628647
+Validation Score:0.9501347708894878
+Variables Used: ['X0: Tin', 'X1: Q', 'X2: flow_shale', 'X3: flow_steam', 'X4: length', 'X5: Pressue']
+Random State Used: 125
+Time Elapsed: 838.31 seconds
+Equation Used: complexity                                                      46
+loss                                                      0.091636
+equation         ((x0 / sqrt(x3)) + (((x5 * x4) + ((((((x5 * sq...
+score                                                     0.002635
+sympy_format     -2*x0 + x0/sqrt(x3) + x1 + x4*x5 - x4 + x5 + (...
+lambda_format    PySRFunction(X=>-2*x0 + x0/sqrt(x3) + x1 + x4*...
+Name: 22, dtype: object
+------------------------------------------------------------------------------------------

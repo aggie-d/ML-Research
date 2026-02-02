@@ -6,8 +6,7 @@ from math import sin, exp
 from sklearn.metrics import r2_score, accuracy_score, confusion_matrix
 from sklearn.model_selection import train_test_split
 
-path = "my_equations/1_28_26."
-run_id = "1_28_26."
+
 
 def load_and_split_data():
     
@@ -18,7 +17,7 @@ def load_and_split_data():
     df.columns = ["Tin", "Q", "flow_shale", "flow_steam", "length", "Pressue", "Status", "Feasability"]
 
     # 1. Split into Train (55%) and Temp (45%)
-    df_train, df_temp = train_test_split(df, test_size=0.45, random_state=343, shuffle=True)
+    df_train, df_temp = train_test_split(df, test_size=0.45, random_state=30, shuffle=True)
 
     # 2. Split Temp (45%) into Validation (15%) and Test (30%)
     # We use 0.67 because 67% of 45% = 30% of total
@@ -26,18 +25,18 @@ def load_and_split_data():
 
     return df_train, df_val, df_test, random_int
 
-def Training_Set(df, var):
+def Training_Set(df, var, run_id, path):
 
     # 1. Separate X (Features) and y (Target)
-    # X contains passed columns *except* 'Numeral' and 'Status'
+    # X contains passed columns *except* 'Feasability' and 'Status'
     X = df[var].to_numpy() 
-    # y contains only the 'Numeral' column
+    # y contains only the 'Feasability' column
     Y = df["Feasability"].to_numpy()
 
     model = PySRRegressor(
         maxsize=50,
         populations=50,
-        niterations=1000,  # < Increase me for better results
+        niterations=1000,  #< Increase me for better results
         binary_operators=["+", "*", "-", "/"],
         unary_operators=[
             "exp",       
@@ -75,7 +74,7 @@ def Training_Set(df, var):
     
 
 
-def Validation_Set(df, var):
+def Validation_Set(df, var, path):
     # 1. Separate X (Features) and y (Target)
     X_val = df[var].to_numpy() 
     y_val = df["Feasability"].to_numpy() 
@@ -95,7 +94,7 @@ def Validation_Set(df, var):
    
 
 
-def Test_Set(df, var, matrix_status):
+def Test_Set(df, var, matrix_status, path):
 
     X_test = df[var].to_numpy() 
     y_test = df["Feasability"].to_numpy()
@@ -112,16 +111,20 @@ def Test_Set(df, var, matrix_status):
     
     # 2. Apply a threshold (typically 0.5) to get binary predicted classes (0 or 1)
     # Use .astype(int) to convert True/False to 1/0
-    
+    # probabilities = 1 / (1 + np.exp(-raw_scores_z))
+    # predicted_classes = probabilities.round()             <-- Used for 0 and 1
+
+
+
     predicted_classes = np.sign(raw_scores_z)
     predicted_classes[predicted_classes == 0] = -1  # Treat 0 as -1 for binary classification
     
     # 4. Calculate the Accuracy
     accuracy = accuracy_score(y_test, predicted_classes)
-    tn, fp, fn, tp = confusion_matrix(y_test, predicted_classes).ravel()
 
     print(f"Accuracy Score: {accuracy:.4f}")
     if matrix_status:
+        tn, fp, fn, tp = confusion_matrix(y_test, predicted_classes).ravel()
         print("-" * 30)
         print(f"Type 1 Errors (False Positives): {fp}")
         print(f"   (Model said Feasible, Reality was NOT)")
@@ -134,7 +137,7 @@ def Test_Set(df, var, matrix_status):
     return accuracy, lambda_func
 
     
-def print_results(accuracy, best_lambda_func, time_elapsed, var, rand_state, v_score):
+def print_results(accuracy, best_lambda_func, time_elapsed, var, rand_state, v_score, path):
 
     folder_name = "Result_Sigmoid_Function"
 
@@ -157,33 +160,49 @@ def print_results(accuracy, best_lambda_func, time_elapsed, var, rand_state, v_s
 def start(variables, run_id, path, num_repeat):
     
     for i in range(num_repeat):
-        path = path + str(i)
-        run_id = run_id + str(i)
+        if path[-1] != ".":
+           path = path[:-1] + str(i)
+           run_id = run_id[:-1]+ str(i)
+        else:
+            path = path + str(i)
+            run_id = run_id + str(i)
+
         time_start = time.time()
 
         df_train, df_val, df_test, random_state_used = load_and_split_data()
 
-        Training_Set(df_train, variables)
-        validation_score= Validation_Set(df_val, variables)
-        accuracy, best_lambda_func = Test_Set(df_test, variables, False)
+        Training_Set(df_train, variables, run_id, path)
+        validation_score= Validation_Set(df_val, variables, path)
+        accuracy, best_lambda_func = Test_Set(df_test, variables, False, path)
 
         time_end = time.time()
         time_elapsed = time_end - time_start
-        print_results(accuracy, best_lambda_func, time_elapsed, variables, random_state_used, validation_score)
+        print_results(accuracy, best_lambda_func, time_elapsed, variables, random_state_used, validation_score, path)
 
 def printlatexequation(folder_path):
     model = PySRRegressor.from_file(run_directory=folder_path)
     print(model.latex())
 
 
-def main(path, run_id):
-    all_variables = ["Tin", "Q", "flow_shale","flow_steam","length", "Pressue"]
-    num_repeat = 1
-    start(all_variables, run_id, path, num_repeat)
-    # printlatexequation("my_equations/12_27_25.2")
+def main():
+    path = "my_equations/2_1_25.1."
+    run_id = "2_1_25.3."
+    # all_variables = ["Tin", "Q", "flow_shale","flow_steam","length", "Pressure"]
+    no_tin = ["Q", "flow_shale","flow_steam","length", "Pressure"]
+    no_Q = ["Tin", "flow_shale","flow_steam","length", "Pressure"]
+    no_shale = ["Tin", "Q", "flow_steam","length", "Pressure"]
+    no_steam = ["Tin", "Q", "flow_shale","length", "Pressure"]
+    no_length = ["Tin", "Q", "flow_shale","flow_steam","Pressure"]
+    no_p = ["Tin", "Q", "flow_shale","flow_steam","length"]
+    
+    num_repeat = 5
+    start(no_tin, run_id, path, num_repeat)
+    # printlatexequation("my_equations/2_1_25.0")
+
+
     
     
 
 
 if __name__ == "__main__":
-    main(path, run_id)
+    main()
