@@ -978,3 +978,73 @@ sympy_format     sqrt(x0) - x4 + (-0.30437627*x0 + x1 + 0.57591...
 lambda_format    PySRFunction(X=>sqrt(x0) - x4 + (-0.30437627*x...
 Name: 24, dtype: object
 ------------------------------------------------------------------------------------------
+
+Accuracy Score for the best PySR equation from my_equations/2_2_25.5.0: 0.8129973474801061
+Validation Score:0.8086253369272237
+Variables Used: ['X0: flow_shale', 'X1: flow_steam', 'X2: length', 'X3: Pressure']
+Random State Used: 229
+Time Elapsed: 1069.68 seconds
+Equation Used: complexity                                                      44
+loss                                                      0.385455
+equation         (((((x3 * x3) * 2.4709592) * x0) - (exp(x2 * 0...
+score                                                     0.001363
+sympy_format     -exp(x1/x0) + (2.4709592*x0*x3**2 - exp(0.1884...
+lambda_format    PySRFunction(X=>-exp(x1/x0) + (2.4709592*x0*x3...
+Name: 23, dtype: object
+------------------------------------------------------------------------------------------
+
+Accuracy Score for the best PySR equation from my_equations/2_2_25.5.1: 0.8103448275862069
+Validation Score:0.784366576819407
+Variables Used: ['X0: flow_shale', 'X1: flow_steam', 'X2: length', 'X3: Pressure']
+Random State Used: 372
+Time Elapsed: 1079.89 seconds
+Equation Used: complexity                                                      46
+loss                                                      0.363636
+equation         ((((x3 + ((0.7434846 / sqrt(x1 * x0)) * ((sqrt...
+score                                                       0.0004
+sympy_format     (-1.2121629*x0/(x0 - x1) + 1.2121629*x3 - 1/(x...
+lambda_format    PySRFunction(X=>(-1.2121629*x0/(x0 - x1) + 1.2...
+Name: 23, dtype: object
+------------------------------------------------------------------------------------------
+
+Accuracy Score for the best PySR equation from my_equations/2_2_25.5.2: 0.7950928381962865
+Validation Score:0.807277628032345
+Variables Used: ['X0: flow_shale', 'X1: flow_steam', 'X2: length', 'X3: Pressure']
+Random State Used: 262
+Time Elapsed: 2017.57 seconds
+Equation Used: complexity                                                      49
+loss                                                      0.370182
+equation         (((inv(x0) * ((inv(13.517321 - x2) - ((x2 + -6...
+score                                                     0.000786
+sympy_format     x3*(x2*(2.259091 + (-x2 + (x1 + 1.3147211)/x1)...
+lambda_format    PySRFunction(X=>x3*(x2*(2.259091 + (-x2 + (x1 ...
+Name: 24, dtype: object
+------------------------------------------------------------------------------------------
+
+Accuracy Score for the best PySR equation from my_equations/2_2_25.5.3: 0.8043766578249337
+Validation Score:0.7884097035040432
+Variables Used: ['X0: flow_shale', 'X1: flow_steam', 'X2: length', 'X3: Pressure']
+Random State Used: 374
+Time Elapsed: 3940.54 seconds
+Equation Used: complexity                                                      49
+loss                                                          0.36
+equation         ((378.398 + ((40.06726 - x2) / x0)) / (inv(x3)...
+score                                                     0.000673
+sympy_format     -x2**2 + (378.398 + (40.06726 - x2)/x0)/(1/(-x...
+lambda_format    PySRFunction(X=>-x2**2 + (378.398 + (40.06726 ...
+Name: 21, dtype: object
+------------------------------------------------------------------------------------------
+
+Accuracy Score for the best PySR equation from my_equations/2_2_25.5.4: 0.8083554376657824
+Validation Score:0.807277628032345
+Variables Used: ['X0: flow_shale', 'X1: flow_steam', 'X2: length', 'X3: Pressure']
+Random State Used: 494
+Time Elapsed: 1075.50 seconds
+Equation Used: complexity                                                      50
+loss                                                      0.376524
+equation         (square(square(x3 / x2) * 0.27420267) - exp((x...
+score                                                      0.00018
+sympy_format     -0.974139051280192*exp(0.124822505*x2) - 1/(x0...
+lambda_format    PySRFunction(X=>-0.974139051280192*exp(0.12482...
+Name: 23, dtype: object
+------------------------------------------------------------------------------------------

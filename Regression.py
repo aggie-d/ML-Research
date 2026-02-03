@@ -181,40 +181,27 @@ def start(variables, run_id, path, num_repeat):
 
 def printlatexequation(folder_path):
     model = PySRRegressor.from_file(run_directory=folder_path)
-    print(model.latex())
+    print(f"{model.latex()}\n")
 
 
 def main():
-    path = "my_equations/2_2_25.0."
-    run_id = "2_2_25.0."
+    path = "my_equations/2_2_25.5."
+    run_id = "2_2_25.5."
     num_repeat = 5
     sleep_time = num_repeat * 1300
 
     # all_variables = ["Tin", "Q", "flow_shale","flow_steam","length", "Pressure"]
-    no_Q = ["Tin", "flow_shale","flow_steam","length", "Pressure"]
-    no_shale = ["Tin", "Q", "flow_steam","length", "Pressure"]
-    no_steam = ["Tin", "Q", "flow_shale","length", "Pressure"]
-    no_length = ["Tin", "Q", "flow_shale","flow_steam","Pressure"]
-    no_p = ["Tin", "Q", "flow_shale","flow_steam","length"]
+    no_Tin = ["flow_shale","flow_steam","length", "Pressure"]
     
-    start(no_Q, run_id, path, num_repeat)
+    # start(no_Tin, run_id, path, num_repeat)
 
-    path = "my_equations/2_2_25.1."
-    run_id = "2_2_25.1."
-    start(no_shale, run_id, path, num_repeat)
+    printlatexequation("my_equations/2_2_25.1.0")
+    printlatexequation("my_equations/2_2_25.1.1")
+    printlatexequation("my_equations/2_2_25.1.2")
+    printlatexequation("my_equations/2_2_25.1.3")
+    printlatexequation("my_equations/2_2_25.1.4")
 
-    path = "my_equations/2_2_25.2."
-    run_id = "2_2_25.2."
-    start(no_steam, run_id, path, num_repeat)
 
-    path = "my_equations/2_2_25.3."
-    run_id = "2_2_25.3."
-    start(no_length, run_id, path, num_repeat)
-
-    path = "my_equations/2_2_25.4."
-    run_id = "2_2_25.4."
-    start(no_p, run_id, path, num_repeat)
-    # printlatexequation("my_equations/2_1_25.0")
 
 
     
