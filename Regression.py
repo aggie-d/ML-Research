@@ -153,7 +153,7 @@ def print_results(accuracy, best_lambda_func, time_elapsed, var, rand_state, v_s
     dashes = "-" * 90
     
     txt = result + dashes
-    file_path = os.path.join(folder_name, "Results.txt")
+    file_path = os.path.join(folder_name, "2_7_2026_Results.txt")
     with open(file_path, "a") as file:
         file.write(txt + "\n")
 
@@ -185,21 +185,16 @@ def printlatexequation(folder_path):
 
 
 def main():
-    path = "my_equations/2_2_25.5."
-    run_id = "2_2_25.5."
+    path = "my_equations/2_7_26"
+    run_id = "2_7_26"
     num_repeat = 5
     sleep_time = num_repeat * 1300
 
     # all_variables = ["Tin", "Q", "flow_shale","flow_steam","length", "Pressure"]
-    no_Tin = ["flow_shale","flow_steam","length", "Pressure"]
+    no_Tin = ["Q", "flow_shale","flow_steam","length", "Pressure"]
     
-    # start(no_Tin, run_id, path, num_repeat)
+    start(no_Tin, run_id, path, num_repeat)
 
-    printlatexequation("my_equations/2_2_25.1.0")
-    printlatexequation("my_equations/2_2_25.1.1")
-    printlatexequation("my_equations/2_2_25.1.2")
-    printlatexequation("my_equations/2_2_25.1.3")
-    printlatexequation("my_equations/2_2_25.1.4")
 
 
 
