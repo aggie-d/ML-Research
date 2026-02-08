@@ -1,11 +1,10 @@
 import numpy as np
 import pandas as pd
-import os, time, random
+import os, time, random, sqlite3, re, json
 from pysr import PySRRegressor
 from math import sin, exp
 from sklearn.metrics import r2_score, accuracy_score, confusion_matrix
 from sklearn.model_selection import train_test_split
-
 
 
 def load_and_split_data():
@@ -100,8 +99,9 @@ def Test_Set(df, var, matrix_status, path):
     y_test = df["Feasability"].to_numpy()
 
     model = PySRRegressor.from_file(run_directory=path)
-    model.set_params(extra_sympy_mappings="inv(x) = 1/x",)
+    model.set_params(extra_sympy_mappings={"inv": lambda x: 1 / x})
     lambda_func = model.get_best()
+    latex_form = model.latex()
 
    
     # 1. Get the raw prediction scores (z values)
@@ -134,28 +134,64 @@ def Test_Set(df, var, matrix_status, path):
         print(f"Correctly Identified Feasible:     {tp}")
         print(f"Correctly Identified Not Feasible: {tn}\n")
 
-    return accuracy, lambda_func
+    return accuracy, lambda_func, latex_form
 
     
-def print_results(accuracy, best_lambda_func, time_elapsed, var, rand_state, v_score, path):
+def print_results(accuracy, best_lambda_func, time_elapsed, var, rand_state, v_score, path, latex):
+    try:
+        connection = sqlite3.connect("test.db")
+        cursor = connection.cursor()
 
-    folder_name = "Result_Sigmoid_Function"
+        complexity_val = int(best_lambda_func['complexity'])
+        vars_serialized = json.dumps(var)
 
-    var_list = []
-    for i in range(len(var)):
-        var_list.append(f"X{i}: {var[i]}")
+        
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS results (
+                trial_id TEXT PRIMARY KEY,
+                accuracy REAL,
+                validation REAL,
+                variables_json TEXT,
+                random_state INTEGER,
+                time_elapsed REAL,
+                complexity INTEGER,
+                latex_format TEXT
+            )
+        ''')
 
-    if not os.path.exists(folder_name):
-        os.makedirs(folder_name)  # Creates the folder if it doesn't exist
+        cursor.execute('''
+            INSERT OR REPLACE INTO results 
+            (trial_id, accuracy, validation, variables_json, random_state, time_elapsed, complexity, latex_format)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (path, accuracy, v_score, vars_serialized, rand_state, time_elapsed, complexity_val, latex))
+        connection.commit()
+        connection.close()
+    except sqlite3.IntegrityError as e:
+        print(f"Integrity error: {e}")
+    except sqlite3.Error as e:
+        print(f"Database error: {e}")
+    except Exception as e:
+        print(f"Unexpected error: {e}")
 
-    # Step 2: Create a text file inside the folder
-    result = f"\nAccuracy Score for the best PySR equation from {path}: {accuracy}\nValidation Score:{v_score}\nVariables Used: {var_list}\nRandom State Used: {rand_state}\nTime Elapsed: {time_elapsed:.2f} seconds\nEquation Used: {best_lambda_func}\n"
-    dashes = "-" * 90
+
+
+    # folder_name = "Result_Sigmoid_Function"
+
+    # var_list = []
+    # for i in range(len(var)):
+    #     var_list.append(f"X{i}: {var[i]}")
+
+    # if not os.path.exists(folder_name):
+    #     os.makedirs(folder_name)  # Creates the folder if it doesn't exist
+
+    # # Step 2: Create a text file inside the folder
+    # result = f"\nAccuracy Score for the best PySR equation from {path}: {accuracy}\nValidation Score:{v_score}\nVariables Used: {var_list}\nRandom State Used: {rand_state}\nTime Elapsed: {time_elapsed:.2f} seconds\nEquation Used: {best_lambda_func}\n"
+    # dashes = "-" * 90
     
-    txt = result + dashes
-    file_path = os.path.join(folder_name, "2_7_2026_Results.txt")
-    with open(file_path, "a") as file:
-        file.write(txt + "\n")
+    # txt = result + dashes
+    # file_path = os.path.join(folder_name, "2_7_2026_Results.txt")
+    # with open(file_path, "a") as file:
+    #     file.write(txt + "\n")
 
 def start(variables, run_id, path, num_repeat):
     
@@ -173,11 +209,11 @@ def start(variables, run_id, path, num_repeat):
 
         Training_Set(df_train, variables, run_id, path)
         validation_score= Validation_Set(df_val, variables, path)
-        accuracy, best_lambda_func = Test_Set(df_test, variables, False, path)
+        accuracy, best_lambda_func, latex = Test_Set(df_test, variables, False, path)
 
         time_end = time.time()
         time_elapsed = time_end - time_start
-        print_results(accuracy, best_lambda_func, time_elapsed, variables, random_state_used, validation_score, path)
+        print_results(accuracy, best_lambda_func, time_elapsed, variables, random_state_used, validation_score, path, latex)
 
 def printlatexequation(folder_path):
     model = PySRRegressor.from_file(run_directory=folder_path)
@@ -185,15 +221,17 @@ def printlatexequation(folder_path):
 
 
 def main():
-    path = "my_equations/2_7_26"
-    run_id = "2_7_26"
-    num_repeat = 5
+    path = "my_equations/2_7_26.1."
+    run_id = "2_7_26.1."
+    num_repeat = 10
     sleep_time = num_repeat * 1300
 
-    # all_variables = ["Tin", "Q", "flow_shale","flow_steam","length", "Pressure"]
+    all_variables = ["Tin", "Q", "flow_shale","flow_steam","length", "Pressure"]
     no_Tin = ["Q", "flow_shale","flow_steam","length", "Pressure"]
+    modified = ["Q", "length"]
     
-    start(no_Tin, run_id, path, num_repeat)
+    start(modified, run_id, path, num_repeat)
+
 
 
 
