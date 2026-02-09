@@ -139,7 +139,7 @@ def Test_Set(df, var, matrix_status, path):
     
 def print_results(accuracy, best_lambda_func, time_elapsed, var, rand_state, v_score, path, latex):
     try:
-        connection = sqlite3.connect("test.db")
+        connection = sqlite3.connect("Results.db")
         cursor = connection.cursor()
 
         complexity_val = int(best_lambda_func['complexity'])
