@@ -221,14 +221,14 @@ def printlatexequation(folder_path):
 
 
 def main():
-    path = "my_equations/2_7_26.1."
-    run_id = "2_7_26.1."
+    path = "my_equations/2_8_26.2."
+    run_id = "2_8_26.2."
     num_repeat = 10
     sleep_time = num_repeat * 1300
 
     all_variables = ["Tin", "Q", "flow_shale","flow_steam","length", "Pressure"]
     no_Tin = ["Q", "flow_shale","flow_steam","length", "Pressure"]
-    modified = ["Q", "length"]
+    modified = ["Q", "length", "Pressure"]
     
     start(modified, run_id, path, num_repeat)
 
