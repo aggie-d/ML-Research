@@ -42,7 +42,11 @@ def Training_Set(df, var, run_id, path):
             "square",
             "sqrt",
             "inv",
-            # ^ Custom operator (julia syntax)
+            "sin",
+            "cos",
+            "cube",
+            "tan",
+            "log",
         ],
         extra_sympy_mappings={"inv": lambda x: 1 / x},
         # ^ Define operator for SymPy as well
@@ -56,9 +60,10 @@ def Training_Set(df, var, run_id, path):
             "square": {"square": 2, "sqrt": 4},
             "sqrt": {"square": 4, "sqrt": 2},
             "exp": {"exp": 0, "inv": 0},
+            "cube": {"square": 1, "cube": 1, "exp": 0},
         },
         maxdepth=30,
-        complexity_of_constants=4,
+        complexity_of_constants=1,
         early_stop_condition=(
         "stop_if(loss, complexity) = loss < 0.03 && complexity < 10"
         # Stop early if we find a good and simple equation
@@ -137,7 +142,7 @@ def Test_Set(df, var, matrix_status, path):
     return accuracy, lambda_func, latex_form
 
     
-def print_results(accuracy, best_lambda_func, time_elapsed, var, rand_state, v_score, path, latex):
+def print_results(accuracy, best_lambda_func, time_elapsed, var, rand_state, v_score, run_id, latex):
     try:
         connection = sqlite3.connect("Results.db")
         cursor = connection.cursor()
@@ -163,7 +168,7 @@ def print_results(accuracy, best_lambda_func, time_elapsed, var, rand_state, v_s
             INSERT OR REPLACE INTO results 
             (trial_id, accuracy, validation, variables_json, random_state, time_elapsed, complexity, latex_format)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (path, accuracy, v_score, vars_serialized, rand_state, time_elapsed, complexity_val, latex))
+        ''', (run_id, accuracy, v_score, vars_serialized, rand_state, time_elapsed, complexity_val, latex))
         connection.commit()
         connection.close()
     except sqlite3.IntegrityError as e:
@@ -199,7 +204,7 @@ def start(variables, run_id, path, num_repeat):
         if path[-1] != ".":
            path = path[:-1] + str(i)
            run_id = run_id[:-1]+ str(i)
-        else:
+        else: 
             path = path + str(i)
             run_id = run_id + str(i)
 
@@ -213,7 +218,7 @@ def start(variables, run_id, path, num_repeat):
 
         time_end = time.time()
         time_elapsed = time_end - time_start
-        print_results(accuracy, best_lambda_func, time_elapsed, variables, random_state_used, validation_score, path, latex)
+        print_results(accuracy, best_lambda_func, time_elapsed, variables, random_state_used, validation_score, run_id, latex)
 
 def printlatexequation(folder_path):
     model = PySRRegressor.from_file(run_directory=folder_path)
@@ -221,16 +226,24 @@ def printlatexequation(folder_path):
 
 
 def main():
-    path = "my_equations/2_10_26.0."
-    run_id = "2_10_26.0."
+    path = "my_equations/2_14_26.0."
+    run_id = "2_14_26.0."
     num_repeat = 10
     sleep_time = num_repeat * 1300
 
     all_variables = ["Tin", "Q", "flow_shale","flow_steam","length", "Pressure"]
     no_Tin = ["Q", "flow_shale","flow_steam","length", "Pressure"]
     
-    modified = ["Tin", "Q", "flow_shale", "length", "Pressure"]
+    modified = ["Q", "length",]
 
+    start(all_variables, run_id, path, num_repeat)
+
+    path = "my_equations/2_14_26.1."
+    run_id = "2_14_26.1."
+    start(no_Tin, run_id, path, num_repeat)
+
+    path = "my_equations/2_14_26.2."
+    run_id = "2_14_26.2."
     start(modified, run_id, path, num_repeat)
 
 
