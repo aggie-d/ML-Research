@@ -42,6 +42,7 @@ def Training_Set(df, var, run_id, path):
             "square",
             "sqrt",
             "inv",
+            
             "sin",
             "cos",
             "cube",
@@ -63,7 +64,7 @@ def Training_Set(df, var, run_id, path):
             "cube": {"square": 1, "cube": 1, "exp": 0},
         },
         maxdepth=30,
-        complexity_of_constants=1,
+        complexity_of_constants=2,
         early_stop_condition=(
         "stop_if(loss, complexity) = loss < 0.03 && complexity < 10"
         # Stop early if we find a good and simple equation
@@ -226,8 +227,8 @@ def printlatexequation(folder_path):
 
 
 def main():
-    path = "my_equations/2_14_26.0."
-    run_id = "2_14_26.0."
+    path = "my_equations/2_16_26.0."
+    run_id = "2_16_26.0."
     num_repeat = 10
     sleep_time = num_repeat * 1300
 
@@ -237,14 +238,6 @@ def main():
     modified = ["Q", "length",]
 
     start(all_variables, run_id, path, num_repeat)
-
-    path = "my_equations/2_14_26.1."
-    run_id = "2_14_26.1."
-    start(no_Tin, run_id, path, num_repeat)
-
-    path = "my_equations/2_14_26.2."
-    run_id = "2_14_26.2."
-    start(modified, run_id, path, num_repeat)
 
 
     # path = "my_equations/2_9_26.1."
